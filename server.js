@@ -5,16 +5,16 @@ const app = require("./app")
 dotenv.config();
 
 
-mongoose.connect(process.env.DATABASE_LOCAL).then(() => {
-    console.log("Database connection is successful 🛢".red.bold);
-});
+const dbURI = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@cluster0.msatzvk.mongodb.net/mydatabase`;
 
 
-// mongoose.connect(process.env.DATABASE_LOCAL).then(() => {
-//     console.log("Database connection is successful 🛢".red.bold);
-// }).catch((err) => {
-//     console.error("Error connecting to database: ", err);
-// });
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log('Connected to MongoDB'.red.bold);
+    })
+    .catch((err) => {
+        console.error('Error connecting to MongoDB:', err);
+    });
 
 
 
