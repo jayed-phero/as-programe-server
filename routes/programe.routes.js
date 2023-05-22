@@ -1,11 +1,13 @@
 const express = require("express");
 const programeController = require("../controllers/programe.controller");
+const { getAllProgrameService } = require("../services/programe.service");
 const router = express.Router();
 
 
-router.post("/apply", programeController.programeApply);
+router.post("/apply", programeController.programeApply)
 
-// router.post("/login", userController.login);
-// router.get("/me", userController.getMe);
+router.get("/", programeController.getAllPrograms);
+
+
 
 module.exports = router;
