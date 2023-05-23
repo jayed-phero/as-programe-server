@@ -1,30 +1,66 @@
+const { query } = require("express");
 const Programe = require("../models/Programe");
 
 exports.programeApplyService = async (applyInfo) => {
     const applyData = await Programe.create(applyInfo);
     const applicationNumber = await Programe.countDocuments();
-    applyData.applicationNumber = applicationNumber; // Add applicationNumber to the document
-
+    applyData.applicationNumber = applicationNumber;
+    
     return applyData;
 };
 
 
-// exports.getAllProgrameService = async (page, query, size) => {
+exports.getAllProgramService = async (page, size) => {
+    const dataCount = await Programe.find().countDocuments();
+    const programs = await Programe.find().skip(page * size).limit(size)
+    const count = await Programe.countDocuments();
 
-//     const programs = await Programe
-//         .find(query)
-//         .skip(page * size)
-//         .limit(size)
-//         .toArray();
-//     const count = await Programe.countDocuments(query);
-
-//     return { programs, count };
-// };
-
-
-exports.getAllProgrameService = async () => {
-    const programs = await Programe.find();
-    const totalCount = programs.length;
-
-    return { programs, totalCount };
+    return { programs, count, dataCount };
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// exports.getAllProgramServic = async (page, size, query, search) => {
+//     try {
+//         let programsQuery = ""
+
+//         if (search) {
+//             programsQuery = programsQuery.find({ applicant_mobile: { $regex: search, $options: "i" } });
+//         }
+
+//         const programs = await programsQuery.skip(page * size).limit(size);
+//         const count = await Programe.countDocuments(query);
+
+//         return { programs, count };
+//     } catch (error) {
+//         throw error;
+//     }
+// };
