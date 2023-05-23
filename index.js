@@ -5,7 +5,7 @@ const app = require("./app")
 dotenv.config();
 
 
-const dbURI = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@cluster0.msatzvk.mongodb.net/mydatabase`;
+const dbURI = `mongodb+srv://${process.env.DB_NAME}:${process.env.DB_PASSWORD}@cluster0.msatzvk.mongodb.net/ASFProgramDB`;
 
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })

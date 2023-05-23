@@ -28,10 +28,48 @@ const userSchema = mongoose.Schema(
                 message: "Password {VALUE}  is not strong enough."
             }
         },
+        confirmPassword: {
+            type: String,
+            required: [true, "Please confirm your password"],
+            validate: {
+                validator: function (value) {
+                    return value === this.password;
+                },
+            },
+            message: "Password don't match!"
+        },
         role: {
             type: String,
             enum: ["buyer", "store-manager", "admin"],
             default: "buyer"
+        },
+        firstName: {
+            type: String,
+            required: [true, "Please provide a first name."],
+            trim: true,
+            minLength: [3, "Name must be at least 3 characters."],
+            maxLength: [100, "Name is to large"]
+        },
+        lastName: {
+            type: String,
+            required: [true, "Please provide a last name"],
+            trim: true,
+            minLength: [3, "Name must be at least 3 charactes."],
+            maxLength: [100, "Name is too large"]
+        },
+        contactNumber: {
+            type: String,
+            validate: [validator.isMobilePhone, "Please provide a valid contact number"],
+        },
+        shippingAddress: String,
+        imageURL: {
+            type: String,
+            validate: [validator.isURL, "Please provide a valid url."]
+        },
+        status: {
+            type: String,
+            default: "inactive",
+            enum: ["active", "inactive", "blocked"]
         },
         confirmationToken: String,
         confirmationTokenExpires: Date,
@@ -45,6 +83,19 @@ const userSchema = mongoose.Schema(
     }
 )
 
+userSchema.pre("save", function (next) {
+    if (this.isModified("password")) {
+        //  only run if password is modified, otherwise it will change every time we save the user!
+        return next();
+    }
+    const password = this.password;
+    const hashedPassword = bcrypt.hashSync(password);
+
+    this.password = hashedPassword;
+    this.confirmPassword = undefined;
+
+    next();
+})
 
 
 userSchema.methods.comparePassword = function (password, hash) {

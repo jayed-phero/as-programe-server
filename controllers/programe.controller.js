@@ -1,4 +1,3 @@
-const Programe = require("../models/Programe");
 const { programeApplyService, allApplicationService, getAllProgrameService, getAllProgramService } = require("../services/programe.service");
 const { generateToken } = require("../utils/token");
 

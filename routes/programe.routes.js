@@ -1,5 +1,4 @@
 const express = require("express");
-const Programe = require('../models/Programe'); 
 const programeController = require("../controllers/programe.controller");
 const { getAllProgrameService } = require("../services/programe.service");
 const router = express.Router();

@@ -1,9 +1,9 @@
 const { query } = require("express");
-const Programe = require("../models/Programe");
+const Program = require("../models/Program");
 
 exports.programeApplyService = async (applyInfo) => {
-    const applyData = await Programe.create(applyInfo);
-    const applicationNumber = await Programe.countDocuments();
+    const applyData = await Program.create(applyInfo);
+    const applicationNumber = await Program.countDocuments();
     applyData.applicationNumber = applicationNumber;
     
     return applyData;
@@ -11,9 +11,9 @@ exports.programeApplyService = async (applyInfo) => {
 
 
 exports.getAllProgramService = async (page, size) => {
-    const dataCount = await Programe.find().countDocuments();
-    const programs = await Programe.find().skip(page * size).limit(size)
-    const count = await Programe.countDocuments();
+    const dataCount = await Program.find().countDocuments();
+    const programs = await Program.find().skip(page * size).limit(size)
+    const count = await Program.countDocuments();
 
     return { programs, count, dataCount };
 };
